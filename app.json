@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "hangry",
-    "slug": "hangry",
+    "name": "Hangry",
+    "slug": "Hangry",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

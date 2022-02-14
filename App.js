@@ -13,6 +13,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Text } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RestaurantContextProvider } from "./src/services/restaurants/restaurant.context";
+import { LocationContextProvider } from "./src/services/location/location.context";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -28,62 +29,66 @@ export default function App() {
   const Tab = createBottomTabNavigator();
 
   const SettingsScreen = () => <Text>Settings</Text>;
+  const MapScreen = () => <Text>Map</Text>;
   return (
     <>
       <ThemeProvider theme={theme}>
-        <RestaurantContextProvider>
-          <NavigationContainer>
-            <Tab.Navigator
-              initialRouteName="Home"
-              screenOptions={{
-                tabBarActiveTintColor: "#219CF0",
-              }}
-            >
-              <Tab.Screen
-                name="Home"
-                component={RestaurantsScreen}
-                options={{
-                  tabBarLabel: "Home",
-                  tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons
-                      name="home"
-                      color={color}
-                      size={size}
-                    />
-                  ),
+        <LocationContextProvider>
+          <RestaurantContextProvider>
+            <NavigationContainer>
+              <Tab.Navigator
+                initialRouteName="Home"
+                screenOptions={{
+                  tabBarActiveTintColor: "#219CF0",
                 }}
-              />
-              <Tab.Screen
-                name="Restaurants"
-                component={SettingsScreen}
-                options={{
-                  tabBarLabel: "Restaurants",
-                  tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons
-                      name="silverware"
-                      color={color}
-                      size={size}
-                    />
-                  ),
-                }}
-              />
-              <Tab.Screen
-                name="Settings"
-                component={SettingsScreen}
-                options={{
-                  tabBarLabel: "Settings",
-                  tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons
-                      name="cog"
-                      color={color}
-                      size={size}
-                    />
-                  ),
-                }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </RestaurantContextProvider>
+              >
+                <Tab.Screen
+                  name="Restaurants"
+                  component={RestaurantsScreen}
+                  options={{
+                    headerShown: false,
+                    tabBarLabel: "Restaurants",
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialCommunityIcons
+                        name="silverware"
+                        color={color}
+                        size={size}
+                      />
+                    ),
+                  }}
+                />
+                <Tab.Screen
+                  name="Map"
+                  component={MapScreen}
+                  options={{
+                    tabBarLabel: "Map",
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialCommunityIcons
+                        name="silverware"
+                        color={color}
+                        size={size}
+                      />
+                    ),
+                  }}
+                />
+                <Tab.Screen
+                  name="Settings"
+                  component={SettingsScreen}
+                  options={{
+                    tabBarLabel: "Settings",
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialCommunityIcons
+                        name="cog"
+                        color={color}
+                        size={size}
+                      />
+                    ),
+                  }}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </RestaurantContextProvider>
+        </LocationContextProvider>
         <ExpoStatusBar style="auto" />
       </ThemeProvider>
     </>

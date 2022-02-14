@@ -15,6 +15,7 @@ import {
   Address,
   Rating,
   Star,
+  placeId,
 } from "./restaurant-info-card.styles";
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
@@ -37,8 +38,13 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
         <Text variant="label">{name}</Text>
         <Section>
           <Rating>
-            {ratingArray.map((item, id) => (
-              <Star key={id} xml={star} width={20} height={20} />
+            {ratingArray.map((_, id) => (
+              <Star
+                key={`star-${placeId}-${id}`}
+                xml={star}
+                width={20}
+                height={20}
+              />
             ))}
           </Rating>
           <SectionEnd>

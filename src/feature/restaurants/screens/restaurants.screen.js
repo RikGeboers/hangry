@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import { View, SafeAreaView, FlatList } from "react-native";
+import { TouchableOpacity, FlatList } from "react-native";
 
-import { getStatusBarHeight } from "react-native-status-bar-height";
 import styled from "styled-components";
 import { RestaurantInfoCard } from "../components/restaurant-info-card";
 import { RestaurantCard } from "../components/restaurant-info-card.styles";
 import { RestaurantContext } from "../../../services/restaurants/restaurant.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { Search } from "../components/search";
-const SafeArea = styled(SafeAreaView)`
-  margin-top: ${getStatusBarHeight()}px;
-`;
+import { SafeArea } from "../../../utils/SafeArea";
+
 const Loading = styled(ActivityIndicator)`
   margin-left: -25px;
 `;
@@ -25,9 +23,8 @@ const RestaurantList = styled(FlatList).attrs({
     padding: 16,
   },
 })``;
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({ navigation }) => {
   const { isLoading, error, restaurants } = useContext(RestaurantContext);
-
   return (
     <>
       {isLoading && (
@@ -39,7 +36,17 @@ export const RestaurantsScreen = () => {
         <Search />
         <RestaurantList
           data={restaurants}
-          renderItem={({ item }) => <RestaurantInfoCard restaurant={item} />}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RestaurantDetail", { restaurant: item })
+                }
+              >
+                <RestaurantInfoCard restaurant={item} />
+              </TouchableOpacity>
+            );
+          }}
           keyExtractor={(item) => item.name}
         />
       </SafeArea>
